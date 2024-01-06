@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bglebtbjtvo2g"]
+
+[ext_resource type="Texture2D" uid="uid://dhblfxcnvi5lw" path="res://Images/black.png" id="1_obww8"]
+[ext_resource type="LabelSettings" uid="uid://c6dvyx4bh7bow" path="res://LabelSettings/EndScreenLebelSettings.tres" id="2_hlygm"]
+
+[node name="main" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(1.79439, 1.0031)
+texture = ExtResource("1_obww8")
+
+[node name="YouWin" type="Label" parent="."]
+offset_left = 128.0
+offset_top = 192.0
+offset_right = 1024.0
+offset_bottom = 465.0
+text = "You Win!"
+label_settings = ExtResource("2_hlygm")

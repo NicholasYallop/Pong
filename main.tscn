@@ -1,0 +1,143 @@
+[gd_scene load_steps=16 format=3 uid="uid://dkfh0yyuyu4xp"]
+
+[ext_resource type="Script" path="res://main.cs" id="1_c8rd1"]
+[ext_resource type="Texture2D" uid="uid://dhblfxcnvi5lw" path="res://Images/black.png" id="2_j1j3j"]
+[ext_resource type="Script" path="res://Entities/Player.cs" id="3_qcsdl"]
+[ext_resource type="Texture2D" uid="uid://oenwtqif6hs1" path="res://Images/white.png" id="4_lifg1"]
+[ext_resource type="Script" path="res://Entities/Ball.cs" id="5_h65wy"]
+[ext_resource type="Script" path="res://Entities/Enemy.cs" id="6_7pyni"]
+[ext_resource type="Script" path="res://Displays/PlayerLives.cs" id="8_t6ehv"]
+[ext_resource type="LabelSettings" uid="uid://djdws4xn5wpab" path="res://LabelSettings/ScoreLabelSettings.tres" id="8_ui6bk"]
+[ext_resource type="Script" path="res://Displays/EnemyLives.cs" id="9_kfeek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hge78"]
+size = Vector2(38, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sio1j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4lsfa"]
+size = Vector2(1152, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bxgd"]
+size = Vector2(1152, 106)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cjd8s"]
+size = Vector2(123.5, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ayjla"]
+size = Vector2(112, 648)
+
+[node name="Main" type="Node2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_c8rd1")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(1.79439, 1.0031)
+texture = ExtResource("2_j1j3j")
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(128, 320)
+script = ExtResource("3_qcsdl")
+
+[node name="PlayerShape" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_hge78")
+
+[node name="PlayerTexture" type="Sprite2D" parent="Player/PlayerShape"]
+position = Vector2(4.76837e-07, 1.78814e-07)
+scale = Vector2(0.05919, 0.247678)
+texture = ExtResource("4_lifg1")
+
+[node name="Ball" type="Area2D" parent="."]
+position = Vector2(576, 320)
+script = ExtResource("5_h65wy")
+
+[node name="BallShape" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_sio1j")
+
+[node name="BallTexture" type="Sprite2D" parent="Ball/BallShape"]
+position = Vector2(2.36034e-05, -4.76837e-06)
+scale = Vector2(0.0311527, 0.0309598)
+texture = ExtResource("4_lifg1")
+
+[node name="Enemy" type="Area2D" parent="."]
+position = Vector2(1024, 320)
+script = ExtResource("6_7pyni")
+
+[node name="EnemyShape" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_hge78")
+
+[node name="EnemyTexture" type="Sprite2D" parent="Enemy/EnemyShape"]
+position = Vector2(4.76837e-07, 1.78814e-07)
+scale = Vector2(0.05919, 0.247678)
+texture = ExtResource("4_lifg1")
+
+[node name="Borders" type="Node" parent="."]
+
+[node name="TopBorder" type="Area2D" parent="Borders"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/TopBorder"]
+position = Vector2(576, -28)
+shape = SubResource("RectangleShape2D_4lsfa")
+
+[node name="BottomBorder" type="Area2D" parent="Borders"]
+position = Vector2(533, 701)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BottomBorder"]
+position = Vector2(43, 0)
+shape = SubResource("RectangleShape2D_6bxgd")
+
+[node name="RightBorder" type="Area2D" parent="Borders"]
+position = Vector2(1214, 342)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder"]
+position = Vector2(-0.25, -18)
+shape = SubResource("RectangleShape2D_cjd8s")
+
+[node name="LeftBorder" type="Area2D" parent="Borders"]
+position = Vector2(-57, 303)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/LeftBorder"]
+position = Vector2(1, 21)
+shape = SubResource("RectangleShape2D_ayjla")
+
+[node name="PlayerLives" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 512.0
+offset_bottom = 576.0
+text = "5"
+label_settings = ExtResource("8_ui6bk")
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_t6ehv")
+
+[node name="EnemyLives" type="Label" parent="."]
+offset_left = 640.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+text = "5"
+label_settings = ExtResource("8_ui6bk")
+vertical_alignment = 1
+script = ExtResource("9_kfeek")
+
+[connection signal="area_entered" from="Player" to="Ball" method="OnPaddleEntered"]
+[connection signal="area_entered" from="Enemy" to="Ball" method="OnPaddleEntered"]
+[connection signal="area_entered" from="Borders/TopBorder" to="Player" method="OnTopOOB"]
+[connection signal="area_entered" from="Borders/TopBorder" to="Ball" method="OnVerticalOOB"]
+[connection signal="area_entered" from="Borders/TopBorder" to="Enemy" method="OnTopOOB"]
+[connection signal="area_exited" from="Borders/TopBorder" to="Player" method="OnLeavingTopOOB"]
+[connection signal="area_exited" from="Borders/TopBorder" to="Enemy" method="OnLeavingTopOOB"]
+[connection signal="area_entered" from="Borders/BottomBorder" to="Player" method="OnBottomOOB"]
+[connection signal="area_entered" from="Borders/BottomBorder" to="Ball" method="OnVerticalOOB"]
+[connection signal="area_entered" from="Borders/BottomBorder" to="Enemy" method="OnBottomOOB"]
+[connection signal="area_exited" from="Borders/BottomBorder" to="Player" method="OnLeavingBottomOOB"]
+[connection signal="area_exited" from="Borders/BottomBorder" to="Enemy" method="OnLeavingBottomOOB"]
+[connection signal="area_entered" from="Borders/RightBorder" to="Ball" method="OnHorizontalOOB"]
+[connection signal="area_entered" from="Borders/RightBorder" to="EnemyLives" method="OnRightOOB"]
+[connection signal="area_entered" from="Borders/LeftBorder" to="Ball" method="OnHorizontalOOB"]
+[connection signal="area_entered" from="Borders/LeftBorder" to="PlayerLives" method="OnLeftOOB"]
+[connection signal="PlayerDied" from="PlayerLives" to="." method="OnPlayerDied"]
+[connection signal="EnemyDied" from="EnemyLives" to="." method="OnEnemyDied"]
+[connection signal="EnemyHurt" from="EnemyLives" to="Enemy" method="OnEnemyHurt"]

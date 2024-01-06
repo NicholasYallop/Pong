@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dci4yei6y1af1"]
+
+[ext_resource type="Texture2D" uid="uid://dhblfxcnvi5lw" path="res://Images/black.png" id="1_kqoww"]
+[ext_resource type="LabelSettings" uid="uid://c6dvyx4bh7bow" path="res://LabelSettings/EndScreenLebelSettings.tres" id="2_u7nga"]
+
+[node name="main" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(1.79439, 1.0031)
+texture = ExtResource("1_kqoww")
+
+[node name="YouLose" type="Label" parent="."]
+offset_left = 88.0
+offset_top = 192.0
+offset_right = 1062.0
+offset_bottom = 465.0
+text = "You lose..."
+label_settings = ExtResource("2_u7nga")
